@@ -1,0 +1,28 @@
+Static Website Hosting on AWS S3 with GoDaddy Domain  
+│  
+├── 🖥️ Create S3 Bucket  
+│   ├── 🎯 Bucket Name: shoppingcarts.life  
+│   ├── 🌍 Region: Singapore  
+│   ├── 🔧 Enable Static Website Hosting  
+│   ├── 🔗 Note S3 Website Endpoint  
+│  
+├── 📂 Upload Website Files  
+│   ├── 📁 Uploaded HTML, CSS, and other static files  
+│   ├── 🔓 Set Public Read Access  
+│  
+├── 🌍 Configure Route 53  
+│   ├── 🏗️ Created Hosted Zone: shoppingcarts.life  
+│   ├── 📋 Copied NS (Name Server) Records  
+│  
+├── 🔄 Update GoDaddy Nameservers  
+│   ├── 🔑 Logged into GoDaddy  
+│   ├── ⚙️ Updated Nameservers with Route 53 Values  
+│   ├── ⏳ Waited for DNS Propagation  
+│  
+├── 🌐 Create Route 53 Record  
+│   ├── 🆎 Created A Record (Alias: Yes)  
+│   ├── 🔗 Pointed to S3 Website Endpoint  
+│  
+└── 🖥️ Test Website  
+    ├── 🔍 Opened http://shoppingcarts.life in Browser  
+    ├── ✅ Verified Website is Accessible

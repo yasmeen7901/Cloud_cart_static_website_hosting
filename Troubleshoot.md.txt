@@ -1,0 +1,90 @@
+🚑 Troubleshooting Guide: AWS S3 Static Website Hosting
+
+🔴 Website Not Loading?
+
+📌 Reason: DNS Propagation Delay
+✅ Solution:
+
+After updating GoDaddy’s nameservers to Route 53, changes may take 24-48 hours to propagate.
+
+Check the status using:
+
+nslookup yourdomain.com
+dig yourdomain.com
+
+If still unresolved, clear your browser cache & DNS cache using:
+
+ipconfig /flushdns  # Windows
+sudo dscacheutil -flushcache  # macOS
+
+
+
+---
+
+🔴 "403 Forbidden" Error in S3
+
+📌 Reason 1: Your bucket is private and does not allow public access.
+✅ Solution:
+1️⃣ Go to AWS S3 → Your Bucket → Permissions
+2️⃣ Under "Block Public Access", disable all restrictions
+3️⃣ Add this Bucket Policy (Replace your-bucket-name):
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::your-bucket-name/*"
+    }
+  ]
+}
+
+4️⃣ Click Save & Try Again
+
+📌 Reason 2: The S3 bucket name and domain name do not match.
+✅ Solution:
+
+If your domain is shoppingcarts.life, your S3 bucket must be named exactly:
+
+shoppingcarts.life
+
+If they don’t match, Route 53 alias records won't work!
+
+Fix: Either rename your S3 bucket or update Route 53 to point to the correct S3 endpoint URL.
+
+
+
+---
+
+🔴 Issue: Stuck While Pasting Route 53 Endpoint
+
+📌 Reason: You copied the wrong S3 website endpoint or missed updating the bucket policy.
+✅ Solution:
+1️⃣ Go to S3 → Static Website Hosting
+2️⃣ Copy the exact website endpoint (e.g., http://your-bucket-name.s3-website-region.amazonaws.com)
+3️⃣ In Route 53 → Hosted Zone, create an Alias Record
+4️⃣ Paste the correct S3 endpoint
+5️⃣ Test your website:
+
+Open a browser
+
+Try accessing: http://yourdomain.com
+
+
+
+---
+
+💡 Final Checklist Before Going Live
+
+✅ GoDaddy DNS updated with Route 53 nameservers
+✅ S3 bucket public access enabled
+✅ Correct bucket policy added
+✅ Route 53 alias record points to S3 endpoint
+✅ Cleared browser & DNS cache
+
+📌 If everything is correct and the website still doesn’t load, wait a bit! DNS can take time. 🚀
+
+
+---
